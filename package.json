@@ -1,0 +1,23 @@
+{
+  "name": "pendlaren",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "SET PORT=3000 && serve ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThuniZ/Pendlaren.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThuniZ/Pendlaren/issues"
+  },
+  "homepage": "https://github.com/ThuniZ/Pendlaren#readme",
+  "dependencies": {
+    "https-localhost": "^4.7.1"
+  }
+}
