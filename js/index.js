@@ -29,7 +29,7 @@ buttonElem.addEventListener('click', () => {
         console.log(position.coords.longitude)
         console.log(position.coords.latitude)
 
-        showOnMap(position);
+        //showOnMap(position);
         getStops(position);
         
        });
@@ -61,7 +61,7 @@ async function getStops (position) {
 
 function printStops(stop) {
     stopsElem.innerHTML = stop.map((stop) => {
-        return `<li id="stop-id" onclick="showStopTimes(${stop.StopLocation.extId})">${stop.StopLocation.name}</li>`;
+        return `<li id="stop-time-id" onclick="showStopTimes(${stop.StopLocation.extId})">${stop.StopLocation.name}</li>`;
     }).join("");
 }
 
@@ -69,17 +69,26 @@ function printStops(stop) {
 
 //addeventListner click för fetch av den hållplatsen
 
-function showStopTimes(id) {
-const stopTimes = document.querySelector("#stop-id");
+async function showStopTimes(id) {
+const stopTimesId = document.querySelector("#stop-id");
 
-fetch(`https://api.resrobot.se/v2.1/departureBoard?id=${id}&format=json&accessId=${API_KEY}`)
-.then((data) => data.json())
-.then((data) => {
-    const departures = data.Departures;
-    for (let i = 0; i < departures.length; i++) {
-        const stop
-        const direction
-    }
+
+const respone = await fetch(`https://api.resrobot.se/v2.1/departureBoard?id=${id}&format=json&accessId=${API_KEY}`)
+const data = await respone.json();
+console.log(data)
+const arivall = data.Departure.map((time) => {
+    return time.time
 })
 
+console.log(arivall)
+//const departure = data.departure;
+
+//const stopTime = arivall.map
+
+
+stopTimesId.innerHTML = arivall.map((time) => {
+    return `<p>${time}</p>`;
+}).join("");
+
 };
+
