@@ -81,10 +81,6 @@ const arivall = data.Departure.map((time) => {
 })
 
 console.log(arivall)
-//const departure = data.departure;
-
-//const stopTime = arivall.map
-
 
 stopTimesId.innerHTML = arivall.map((time) => {
     return `<p>${time}</p>`;
