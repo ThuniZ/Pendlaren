@@ -76,15 +76,27 @@ const stopTimesId = document.querySelector("#stop-id");
 const respone = await fetch(`https://api.resrobot.se/v2.1/departureBoard?id=${id}&format=json&accessId=${API_KEY}`)
 const data = await respone.json();
 console.log(data)
-const arivall = data.Departure.map((time) => {
-    return time.time
-})
 
-console.log(arivall)
 
-stopTimesId.innerHTML = arivall.map((time) => {
-    return `<p>${time}</p>`;
-}).join("");
+let stopsList = [];
+
+for (i = 0; i < 10; i++) {
+    if (data.Departure[i].time) {
+        stopsList.push({
+                time: data.Departure[i].time,
+                name: data.Departure[i].name.replace("Länstrafik -", ""),
+                direction: data.Departure[i].direction
+            })
+    }
+    
+}
+console.log(stopsList)
+
+stopTimesId.innerHTML = stopsList.map((item) => {
+    return `<p>${item.name}, ${item.direction}, Tid: ${item.time}</p>`
+}).join("")
+
+
 
 };
 
