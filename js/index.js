@@ -100,3 +100,77 @@ stopTimesId.innerHTML = stopsList.map((item) => {
 
 };
 
+//------------PROFILBILD--------------------//
+
+const cameraButton = document.querySelector('#take-pic');
+const preVideoElem = document.querySelector('#camera');
+const takeProfile = document.querySelector('#take-profile');
+const profilePreView = document.querySelector('#picture');
+const profilePic = document.querySelector('#profile-picture')
+
+const ctx = profilePreView.getContext('2d');
+
+let video;
+const images = [];
+
+cameraButton.addEventListener('click', async () => {
+    if ('mediaDevices' in navigator) {
+        video = await navigator.mediaDevices.getUserMedia({ video: true, audio: false})
+        preVideoElem.srcObject = video;
+    }
+})
+
+takeProfile.addEventListener('click', () => {
+    ctx.drawImage(preVideoElem, 0, 0, 640, 480);
+    const imgData = profilePreView.toDataURL('image/png');
+    images.push({
+        id: "Profile pic",
+        image: imgData
+    });
+
+    localStorage.setItem('cameraApp', JSON.stringify(images));
+
+    video.getTracks().forEach(track => {
+        track.stop();
+    });
+    cameraButton.style.display = "none";
+    preVideoElem.style.display = "none";
+    takeProfile.style.display = "none"; 
+    //getImages();
+})
+
+function createImage(image) {
+    const imageElem = document.createElement('img');
+    imageElem.setAttribute('src', image.image);
+
+    profilePic.append(imageElem);
+}
+
+function getImages() {
+ 
+
+    const images = JSON.parse(localStorage.getItem('cameraApp'));
+
+    for(const image of images) {
+        createImage(image);
+    }
+
+}
+
+getImages();
+showProfilePic();
+
+function showProfilePic() {
+    if (localStorage.getItem('cameraApp') === null) {
+        //getImages();
+    } else {
+        cameraButton.style.display = "none";
+        preVideoElem.style.display = "none";
+        takeProfile.style.display = "none"; 
+        getImages();
+    }
+}
+
+function dontShow() {
+    
+}
